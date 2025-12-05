@@ -19,7 +19,7 @@ const Login = () => {
     <div className="min-h-screen bg-gray-300 flex flex-col items-center justify-between pb-20 px-6 ">
       {/* Header */}
       <div className="my-8 flex items-start justify-between gap-8  w-full ">
-        <img src="../assets/logo-main.png" alt="BoTinda AI" className="border border-indigo-400 h-12 " />
+        <img src="../../public/logo.png" alt="BoTinda AI" className="w-24 h-12 border border-red-500 " />
         <p className="text-12 text-blue-900 mt-1">
           Pas de compte ? <span className="text-primary cursor-pointer font-bold " onClick={() => navigate('/signup')}>S'inscrire</span>
         </p>
@@ -43,8 +43,8 @@ const Login = () => {
         <button
           onClick={handleLoginWithPhone}
           disabled={!phone}
-          className={`w-full py-2 px-4 rounded-lg text-white font-medium transition ${
-            phone ? 'bg-primary hover:bg-blue-800' : 'bg-gray-400 cursor-not-allowed'
+          className={`w-full py-2 border border-blue-400 text-gray-600 px-4 rounded-lg font-medium transition ${
+            phone ? 'bg-primary hover:bg-blue-800 hover:text-gray-50' : 'bg-gray-400 cursor-not-allowed'
           }`}
         >
           Continue
