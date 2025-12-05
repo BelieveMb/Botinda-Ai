@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import CodeInput from '../components/smallComponents/CodeInput';
+import Header from '../components/Header';
 
 const VerifyCode = () => {
   const [code, setCode] = useState('');
@@ -15,17 +16,18 @@ const VerifyCode = () => {
   };
 
   return (
-    <div className="min-h-screen bg-grayLight flex flex-col items-center justify-center p-4">
-      {/* Header */}
+    <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-between p-4">
+      {/* Header
       <div className="mb-8">
         <img src="/logo.png" alt="BoTinda AI" className="h-12 mx-auto" />
         <p className="text-sm text-gray-500 mt-1">
           Pas de compte ? <span className="text-primary cursor-pointer" onClick={() => navigate('/signup')}>S'inscrire</span>
         </p>
-      </div>
+      </div> */}
+      <Header />
 
       {/* Card */}
-      <div className="bg-white rounded-xl shadow-md p-6 w-full max-w-md">
+      <div className="bg-white rounded-xl shadow-md p-6 w-full max-w-md mb-32">
         <h1 className="text-2xl font-poppins font-semibold text-primary mb-4">Connexion</h1>
         <p className="text-gray-600 mb-4">
           Nous venons de vous envoyer un code de vérification. Vérifiez votre messagerie.
