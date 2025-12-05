@@ -16,7 +16,7 @@ export default function Homepage() {
           <h1 class="text-2xl lg:text-3xl font-semibold tracking-tight text-balance text-white sm:text-7xl text-center -mt-7 w-full lg:w-[28rem]">Je géres tes commandes pendant que tu dors.</h1>
 
         </div>
-        <MainButton title="👉 Commencez gratuitement" />
+        <MainButton title="👉 Commencez gratuitement" to={"/Login"}/>
       </aside>
 
       <div className="my-8 lg:my-6 flex justify-center content-center">

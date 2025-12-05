@@ -1,6 +1,7 @@
 // src/App.jsx
 import Homepage from './pages/Homepage'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import Login from './pages/Login';
 
 function App() {
   return (
@@ -9,8 +10,8 @@ function App() {
          <div style={{ flex: 1, overflow: 'auto' }}>
             <Routes>
               <Route path="/" element={<Homepage />} />
-              {/* <Route path="/login" element={<Login />} />
-              <Route path="/verify-code" element={<VerifyCode />} />
+             <Route path="/login" element={<Login />} />
+              {/*  <Route path="/verify-code" element={<VerifyCode />} />
               <Route path="/signup" element={<Register />} />
               <Route path="/dashboard" element={<DashboardPage />} /> 
               <Route path="/order/new" element={<NewOrder />} /> 
