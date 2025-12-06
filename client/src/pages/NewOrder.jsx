@@ -48,7 +48,7 @@ export default function NewOrder() {
 
 
       <main className="px-4 pt-6  bg-cover bg-center h-full" 
-        style={{ backgroundImage: "url('../assets/BoTinda-agent.png')" }} >
+        style={{ backgroundImage: "url('../../public/BoTinda_agent1.png')" }} >
       
         {/* Stats */}
         <div className="grid grid-cols-2 gap-4 mb-6 bg-gray-200 p-3 rounded-lg">

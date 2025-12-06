@@ -1,7 +1,9 @@
 // src/components/dashboard/OrderDetailCard.jsx
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function OrderDetailCard({ order, onStatusChange, onSendMessage, onRelanceIA }) {
+  const navigate = useNavigate();
   const [isEditingStatus, setIsEditingStatus] = useState(false);
   const [selectedStatus, setSelectedStatus] = useState(order.status);
 
@@ -31,16 +33,16 @@ export default function OrderDetailCard({ order, onStatusChange, onSendMessage, 
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-lg p-5 border border-gray-200">
+    <div className="bg-white opacity-95 rounded-xl shadow-lg p-5 border border-gray-200">
       {/* Header */}
       <div className="flex justify-between items-center mb-4">
         <div className="flex items-center space-x-2">
-          <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center">
-            <span className="text-white text-lg">📦</span>
+          <div className="w-10 h-10 bg-blue-300 rounded-full flex items-center justify-center" onClick={() => navigate("/dashboard")}>
+            <span className="text-white text-lg">⬅️</span>
           </div>
           <h2 className="text-xl font-semibold text-gray-800">Commandes</h2>
         </div>
-        <button className="w-10 h-10 bg-red-500 rounded-full flex items-center justify-center text-white">
+        <button className="w-10 h-10 bg-red-300 rounded-full flex items-center justify-center text-white">
           🗑️
         </button>
       </div>

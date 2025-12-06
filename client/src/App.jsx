@@ -5,6 +5,8 @@ import Login from './pages/Login';
 import VerifyCode from './pages/VerifyCode';
 import Register from './pages/Register';
 import DashboardPage from './pages/DashboardPage';
+import NewOrder from './pages/NewOrder';
+import OrderDetail from './pages/OrderDetail';
 
 function App() {
   return (
@@ -16,9 +18,9 @@ function App() {
              <Route path="/login" element={<Login />} />
               <Route path="/verify-code" element={<VerifyCode />} />
               <Route path="/signup" element={<Register />} />
-               <Route path="/dashboard" element={<DashboardPage />} /> 
-              {/*<Route path="/order/new" element={<NewOrder />} /> 
-              <Route path="/order/1" element={<OrderDetail />} />  */}
+              <Route path="/dashboard" element={<DashboardPage />} /> 
+              <Route path="/order/new" element={<NewOrder />} /> 
+              <Route path="/order/1" element={<OrderDetail />} /> 
             </Routes>
         </div>
       </div>

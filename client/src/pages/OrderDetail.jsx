@@ -48,7 +48,7 @@ export default function OrderDetail() {
 
 
       <main className="px-4 pt-6  bg-cover bg-center h-full" 
-        style={{ backgroundImage: "url('../assets/BoTinda-agent.png')" }} >
+        style={{ backgroundImage: "url('../../public/BoTinda_agent1.png')" }} >
       
         {/* Stats */}
         <div className="grid grid-cols-2 gap-4 mb-6 bg-gray-200 p-3 rounded-lg">
@@ -57,15 +57,15 @@ export default function OrderDetail() {
         </div>
 
           <div className="mt-6">
-             <div className="flex justify-between items-center mb-4">
-               <h2 className="text-lg font-semibold text-secondary">Commandes</h2>
+             {/* <div className="flex justify-between items-center mb-4">
+               <h2 className="text-lg font-semibold secondary-color">Commandes</h2>
                <button
                  onClick={handleAddCommande }
                  className="bg-[#FFA500] text-[#002D6B] px-4 py-2 rounded-lg font-medium"
                >
                  Ajouter +
                </button>
-             </div>
+             </div> */}
               <OrderDetailCard
                 order={order}
                 onStatusChange={handleStatusChange}

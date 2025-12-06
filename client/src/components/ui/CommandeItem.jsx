@@ -1,7 +1,9 @@
 // src/components/dashboard/CommandeItem.jsx
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function CommandeItem({ commande }) {
+  const navigate = useNavigate();
   const getStatusColor = (status) => {
     switch (status) {
       case 'confirmée': return 'bg-yellow-100 text-yellow-800';
@@ -17,15 +19,15 @@ export default function CommandeItem({ commande }) {
       <div className="flex justify-between items-start">
         <div className="flex-1">
           <div className="flex items-center space-x-2 mb-1">
-            <span className="font-semibold action-color">#1234 - {commande.client}</span>
+            <span className="font-semibold primary-color">#1234 - {commande.client}</span>
             <span className={`px-2 py-1 text-xs font-bold rounded-full ${getStatusColor(commande.status)}`}>
               {commande.status}
             </span>
           </div>
           <p className="text-sm text-gray-800">{commande.produit}</p>
-          <p className="text-sm font-bold text-primary">{commande.montant} FC</p>
+          <p className="text-sm font-bold action-color">{commande.montant} FC</p>
         </div>
-        <button className="bg-blue-500 text-white p-2 rounded-full">
+        <button className="bg-blue-500 text-white p-2 rounded-full" onClick={() => navigate("/order/1")}>
           <span className=" text-2xl font-bold"> → </span> 
         </button>
       </div>

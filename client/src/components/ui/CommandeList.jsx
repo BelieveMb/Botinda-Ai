@@ -18,7 +18,7 @@ export default function CommandeList({ commandes, onAddClick }) {
   return (
     <div className="mt-6">
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-lg font-semibold text-secondary">Commandes</h2>
+        <h2 className="text-lg font-semibold text-secondary text-blue-700">Commandes</h2>
         <button
           onClick={onAddClick}
           className="bg-[#FFA500] text-[#002D6B] px-4 py-2 rounded-lg font-medium"

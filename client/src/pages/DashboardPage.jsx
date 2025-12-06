@@ -41,7 +41,7 @@ export default function DashboardPage() {
 
   const handleAddCommande = () => {
     alert("Ouvre le formulaire d'ajout !");
-    navigate("/order/1");
+    navigate("/order/new");
     // Ici, tu rediriges vers /order/new ou ouvres un modal
   };
 
