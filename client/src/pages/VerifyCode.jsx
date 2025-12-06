@@ -17,13 +17,7 @@ const VerifyCode = () => {
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-between p-4">
-      {/* Header
-      <div className="mb-8">
-        <img src="/logo.png" alt="BoTinda AI" className="h-12 mx-auto" />
-        <p className="text-sm text-gray-500 mt-1">
-          Pas de compte ? <span className="text-primary cursor-pointer" onClick={() => navigate('/signup')}>S'inscrire</span>
-        </p>
-      </div> */}
+     
       <Header />
 
       {/* Card */}

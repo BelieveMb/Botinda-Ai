@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AuthButton from '../components/smallComponents/AuthButton';
+import PhoneInput from '../components/smallComponents/PhoneInput';
 
 const Register = () => {
   const [phone, setPhone] = useState('');
@@ -15,10 +16,10 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen bg-grayLight flex flex-col items-center justify-center p-4">
+    <div className="min-h-screen bg-gray-200 flex flex-col items-center justify-center p-4">
       {/* Header */}
-      <div className="mb-8">
-        <img src="/logo.png" alt="BoTinda AI" className="h-12 mx-auto" />
+      <div className="mb-8 flex items-start justify-between content-start gap-8  w-full lg:px-8">
+        <img src="/logo.png" alt="BoTinda AI" className="h-12 w-24" />
         <p className="text-sm text-gray-500 mt-1">
           Déjà membre ? <span className="text-primary cursor-pointer" onClick={() => navigate('/login')}>Se connecter</span>
         </p>
@@ -46,7 +47,7 @@ const Register = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Mot de passe"
-            className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+            className="w-full pl-10 pr-4 py-2 border border-gray-300 text-blue-800 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
           />
         </div>
 
@@ -55,7 +56,7 @@ const Register = () => {
           onClick={handleSignup}
           disabled={!phone || !password}
           className={`w-full py-2 px-4 rounded-lg text-white font-medium transition ${
-            phone && password ? 'bg-primary hover:bg-blue-800' : 'bg-gray-400 cursor-not-allowed'
+            phone && password ? 'bg-blue-600 hover:bg-blue-800' : 'bg-gray-400 cursor-not-allowed'
           }`}
         >
           Continue
