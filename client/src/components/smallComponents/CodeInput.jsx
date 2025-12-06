@@ -42,7 +42,7 @@ const CodeInput = ({ length = 4, onComplete }) => {
           value={code[i]}
           onChange={(e) => handleChange(i, e)}
           onKeyDown={(e) => handleKeyDown(i, e)}
-          className="w-12 h-12 text-center text-xl font-bold border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+          className="w-12 h-12 text-center text-xl font-bold text-blue-500 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
           pattern="\d"
         />
       ))}

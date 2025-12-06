@@ -42,8 +42,11 @@ const VerifyCode = () => {
         <button
           onClick={() => handleVerify(code)} // Pour test manuel
           disabled={code.length !== 4}
-          className={`w-full py-2 px-4 rounded-lg text-white font-medium transition ${
-            code.length === 4 ? 'bg-primary hover:bg-blue-800' : 'bg-gray-400 cursor-not-allowed'
+          // className={`w-full py-2 px-4 rounded-lg text-white bg-blue-600 font-medium transition ${
+          //   code.length === 4 ? 'bg-gray-300 hover:bg-blue-800' : 'bg-gray-400 cursor-not-allowed'
+          // }`}
+          className={`w-full py-2 px-4 rounded-lg text-white bg-blue-600 font-medium transition ${
+             code.length !== 4 ? 'bg-gray-300 hover:bg-blue-800' : 'bg-gray-400 cursor-not-allowed'
           }`}
         >
           Continue

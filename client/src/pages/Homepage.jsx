@@ -12,8 +12,8 @@ export default function Homepage() {
     <section className="w-full layoutMain ">
       <aside className="w-full lg:w-xl flex flex-col justify-center items-center">
         <div className="my-40 flex flex-col justify-center items-center content-center">
-          <img src="./../../public/logo.png" alt="logo Botinda,"  className="w-60  lg:w-80 h-52 lg:h-60" />
-          <h1 class="text-2xl lg:text-3xl font-semibold tracking-tight text-balance text-white sm:text-7xl text-center -mt-7 w-full lg:w-[28rem]">Je géres tes commandes pendant que tu dors.</h1>
+          <img src="./../../public/logo.png" alt="logo Botinda,"  className="w-60  lg:w-80 h-32 lg:h-42" />
+          <h1 class="text-2xl lg:text-3xl font-semibold tracking-tight text-balance text-white sm:text-7xl text-center -mt-2 w-full lg:w-[28rem]">Je géres tes commandes pendant que tu dors.</h1>
 
         </div>
         <MainButton title="👉 Commencez gratuitement" to={"/Login"}/>
