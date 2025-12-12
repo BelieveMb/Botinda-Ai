@@ -7,6 +7,8 @@ import Register from './pages/Register';
 import DashboardPage from './pages/DashboardPage';
 import NewOrder from './pages/NewOrder';
 import OrderDetail from './pages/OrderDetail';
+import Report from './pages/Report';
+import Notification from './pages/Notification';
 
 function App() {
   return (
@@ -21,6 +23,8 @@ function App() {
               <Route path="/dashboard" element={<DashboardPage />} /> 
               <Route path="/order/new" element={<NewOrder />} /> 
               <Route path="/order/1" element={<OrderDetail />} /> 
+              <Route path="/report" element={<Report />} /> 
+              <Route path="/notification" element={<Notification />} /> 
             </Routes>
         </div>
       </div>

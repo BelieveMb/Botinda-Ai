@@ -57,15 +57,7 @@ export default function OrderDetail() {
         </div>
 
           <div className="mt-6">
-             {/* <div className="flex justify-between items-center mb-4">
-               <h2 className="text-lg font-semibold secondary-color">Commandes</h2>
-               <button
-                 onClick={handleAddCommande }
-                 className="bg-[#FFA500] text-[#002D6B] px-4 py-2 rounded-lg font-medium"
-               >
-                 Ajouter +
-               </button>
-             </div> */}
+
               <OrderDetailCard
                 order={order}
                 onStatusChange={handleStatusChange}

@@ -6,7 +6,7 @@ export default function LayoutDash({ children }) {
   return (
     <div className="flex min-h-screen bg-gray-100">
       {/* Sidebar */}
-      <Sidebara />
+      <Sidebar />
 
       {/* Contenu principal */}
       <div className="ml-64 flex-1">

@@ -53,6 +53,10 @@ body {
 .action-color {
   color : var(--action-color);
 }
+.bg-action {
+  background-color : var(--action-color);
+  color: var(--primary-color);
+}
 .primary-color {
   color: var(--primary-color);
 }
