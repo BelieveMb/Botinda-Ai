@@ -8,7 +8,7 @@ import DashboardPage from './pages/DashboardPage';
 import NewOrder from './pages/NewOrder';
 import OrderDetail from './pages/OrderDetail';
 import Report from './pages/Report';
-import Notification from './pages/Notification';
+import SearchScreen from './pages/SearchScreen';
 
 function App() {
   return (
@@ -24,7 +24,7 @@ function App() {
               <Route path="/order/new" element={<NewOrder />} /> 
               <Route path="/order/1" element={<OrderDetail />} /> 
               <Route path="/report" element={<Report />} /> 
-              <Route path="/notification" element={<Notification />} /> 
+              <Route path="/search" element={<SearchScreen />} /> 
             </Routes>
         </div>
       </div>

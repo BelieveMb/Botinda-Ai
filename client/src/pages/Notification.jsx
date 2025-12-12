@@ -2,7 +2,7 @@ import React from 'react'
 
 function Notification() {
   return (
-    <div>Notification</div>
+    <div>En pause pour l'instant</div>
   )
 }
 
