@@ -5,6 +5,7 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
 import supabase from "./config/connexionDB.js"
+import authRoutes from "./routes/authRoutes.js"
 dotenv.config();
 
 const app = express();
@@ -15,18 +16,8 @@ app.use(cors({ origin: 'http://localhost:5173' })); // À adapter avec ton front
 app.use(morgan('dev'));
 app.use(express.json());
 
+app.use("/authUser", authRoutes);
 
-app.get("/statut", async (req, res) => {
-
-
-  // Logique pour récupérer les informations de l'utilisateur à partir de l'I
-  const { data, error } = await supabase
-    .from("statuses")
-    .select();
-    console.log("Sta = ", data);
-
-    
-});
 
 // Route de test
 app.get('/api/health', (req, res) => {
