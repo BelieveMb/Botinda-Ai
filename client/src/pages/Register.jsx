@@ -3,13 +3,16 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AuthButton from '../components/smallComponents/AuthButton';
 import PhoneInput from '../components/smallComponents/PhoneInput';
+import InputBox from '../components/ui/InputBox';
 
 const Register = () => {
+  const [fullname, setFullname] = useState('');
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
   const handleSignup = async () => {
+    
     console.log('Inscription avec:', { phone, password });
     // Ici tu appellerais Supabase pour créer l'utilisateur
     navigate('/verify-code'); // ou directement dashboard si pas de SMS
@@ -36,8 +39,20 @@ const Register = () => {
 
         <div className="my-4 text-center text-gray-400">— Ou continuez avec votre numéro —</div>
 
+        
+        <div className="relative my-6">
+          <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">👤</span>
+          <input
+            type="tel"
+            value={fullname}
+            onChange={setFullname}
+            placeholder={"Ex. David Okit"}
+            className="w-full pl-10 pr-4 py-2 bg-gray-100 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-blue-500 text-blue-800 font-bold"
+          />
+        </div>
         {/* Phone Input */}
         <PhoneInput value={phone} onChange={setPhone} />
+
 
         {/* Password Input */}
         <div className="relative my-4">
@@ -47,7 +62,7 @@ const Register = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Mot de passe"
-            className="w-full pl-10 pr-4 py-2 border border-gray-300 text-blue-800 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+            className="w-full pl-10 pr-4 py-2 border border-gray-300 text-blue-800 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent font-bold bg-gray-100"
           />
         </div>
 

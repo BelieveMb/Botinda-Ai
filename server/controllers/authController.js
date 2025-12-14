@@ -2,14 +2,14 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import supabase from '../config/connexionDB.js';
-import { sendVerificationSMS } from '../utils/twilio.js';
+// import { sendVerificationSMS } from '../utils/twilio.js';
 
-// 🔑 Générateur de JWT
+// 🔑 Générateur de JWTs
 const generateToken = (userId) => {
-  return jwt.sign({ id: userId }, process.env.JWT_SECRET, { expiresIn: '30d' });
+  return jwt.sign({ iduser: userId }, process.env.JWT_SECRET, { expiresIn: '30d' });
 };
 
-// 📲 Inscription a
+// 📲 Inscriptio
 export const register = async (req, res) => {
   const { full_name, email, phone, password } = req.body;
 
@@ -22,10 +22,10 @@ export const register = async (req, res) => {
   }
 
   try {
-    // 2. Vérifier si utilisateur existe déjà
+    // 2. Vérifier si utilisateur existe 
     let {  existing, error } = await supabase
       .from('users')
-      .select('id')
+      .select('iduser')
       .or(`email.eq.${email},phone.eq.${phone}`)
       .maybeSingle();
 
@@ -41,19 +41,19 @@ export const register = async (req, res) => {
     const {  user, error: insertError } = await supabase
       .from('users')
       .insert([{ full_name, email, phone, password: hashedPassword }])
-      .select('id, full_name, email, phone')
+      .select('iduser, full_name, email, phone')
       .single();
 
     if (insertError) throw insertError;
 
-    // 5. Optionnel : envoyer SMS de bienvenue
+    /* 5. Optionnel : envoyer SMS de bienvenue
     if (phone) {
       try {
         await sendVerificationSMS(phone, `👋 Bienvenue ${full_name} ! Votre compte BoTinda AI est créé.`);
       } catch (smsError) {
         console.warn("Erreur envoi SMS:", smsError.message);
       }
-    }
+    }*/
 
     // 6. Générer JWT
     const token = generateToken(user.id);
@@ -61,7 +61,7 @@ export const register = async (req, res) => {
     res.status(201).json({
       success: true,
       token,
-      user: { id: user.id, full_name: user.full_name, email: user.email, phone: user.phone }
+      user: { iduser: user.iduser, full_name: user.full_name, email: user.email, phone: user.phone }
     });
 
   } catch (err) {
@@ -82,7 +82,7 @@ export const login = async (req, res) => {
     // 1. Trouver utilisateur
     const {  user, error } = await supabase
       .from('users')
-      .select('id, full_name, email, phone, password')
+      .select('iduser, full_name, email, phone, password')
       .or(`email.eq.${email},phone.eq.${phone}`)
       .maybeSingle();
 
@@ -97,12 +97,12 @@ export const login = async (req, res) => {
     }
 
     // 3. Générer JWT
-    const token = generateToken(user.id);
+    const token = generateToken(user.iduser);
 
     res.json({
       success: true,
       token,
-      user: { id: user.id, full_name: user.full_name, email: user.email, phone: user.phone }
+      user: { id: user.iduser, full_name: user.full_name, email: user.email, phone: user.phone }
     });
 
   } catch (err) {
