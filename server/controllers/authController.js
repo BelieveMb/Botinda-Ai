@@ -58,12 +58,12 @@ export const register = async (req, res) => {
     // 6. Générer JWT
     const token = generateToken(user.id);
 
-    res.status(201).json({
+    return res.status(201).json({
       success: true,
       token,
-      user: { iduser: user.iduser, full_name: user.full_name, email: user.email, phone: user.phone }
+      user: { iduser: user.iduser, full_name: user.full_name, email: user.email, phone: user.phone },
+      message: "Vous êtes enregistré, connectez-vous !"
     });
-
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Erreur serveur. Réessayez plus tard." });
