@@ -1,7 +1,7 @@
 // src/components/PhoneInput.jsx
 import { useState } from 'react';
 
-const PhoneInput = ({ value, onChange, placeholder = "Numéro de téléphone" }) => {
+const PhoneInput = ({ name, value, onChange, placeholder = "Numéro de téléphone" }) => {
   const [prefix] = useState('+243'); // À adapter selon le pays
 
   const handleChange = (e) => {

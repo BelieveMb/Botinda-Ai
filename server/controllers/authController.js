@@ -11,8 +11,8 @@ const generateToken = (userId) => {
 
 // 📲 Inscriptio
 export const register = async (req, res) => {
-  const { full_name, email, phone, password } = req.body;
-
+  const { full_name, phone, password } = req.body;
+ const email = "KINR";
   // 1. Validation
   if (!full_name || (!email && !phone) || !password) {
     return res.status(400).json({ error: "Nom, mot de passe et (email ou téléphone) requis." });
@@ -40,7 +40,7 @@ export const register = async (req, res) => {
     // 4. Insérer utilisateur
     const {  user, error: insertError } = await supabase
       .from('users')
-      .insert([{ full_name, email, phone, password: hashedPassword }])
+      .insert([{ full_name, phone, password: hashedPassword }])
       .select('iduser, full_name, email, phone')
       .single();
 
