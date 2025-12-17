@@ -16,27 +16,27 @@ export default function DashboardPage() {
       montant: "85 000",
       status: "confirmée"
     },
-    {
-      id: 2,
-      client: "Kanza L.",
-      produit: "Chemise x2",
-      montant: "50 000",
-      status: "payée"
-    },
-    {
-      id: 3,
-      client: "Mpaka J.",
-      produit: "Pantalon x1",
-      montant: "40 000",
-      status: "expédiée"
-    },
-    {
-      id: 4,
-      client: "Nkosi T.",
-      produit: "Chaussures x1",
-      montant: "60 000",
-      status: "livrée"
-    }
+    // {
+    //   id: 2,
+    //   client: "Kanza L.",
+    //   produit: "Chemise x2",
+    //   montant: "50 000",
+    //   status: "payée"
+    // },
+    // {
+    //   id: 3,
+    //   client: "Mpaka J.",
+    //   produit: "Pantalon x1",
+    //   montant: "40 000",
+    //   status: "expédiée"
+    // },
+    // {
+    //   id: 4,
+    //   client: "Nkosi T.",
+    //   produit: "Chaussures x1",
+    //   montant: "60 000",
+    //   status: "livrée"
+    // }
   ]);
 
   const handleAddCommande = () => {

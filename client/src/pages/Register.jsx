@@ -69,11 +69,12 @@ const Register = () => {
 
     // Envoi de la requête POST pour enregistrer l'utilisateur
     const response = await axios.post(`${config.apiUrl}/authUser/register`, {
-      full_name, phone, password
+      full_name: full_name, phone: phone, password: password
     });
 
     // Vérification de la réponse de l'API (en fonction de la structure de réponse de l'API)
-    if (response.data && response.data.success) {
+    // if (response.data && response.data.success) {
+    if(response.status === 200){ 
       // Afficher l'alerte de succès avec SweetAlert2
       await Swal.fire({
         icon: 'success',

@@ -34,30 +34,24 @@ const Login = () => {
     }
     
     // Envoi de la requête POST pour enregistrer l'utilisateur
-    const response = await axios.post(`${config.apiUrl}/authUser/login`, {phone, password});
-    console.log("hello world");
-
-      // if (response.data.status === 200) {
-    console.log(response.data);
+    const response = await axios.post(`${config.apiUrl}/authUser/login`, {phone: phone, password: password});
     
     // Vérification de la réponse de l'API (en fonction de la structure de réponse de l'API)
-    if (response.data && response.data.success) {
+    if (response.data.status === 200) {
+    // if (response.data && response.data.success) {
       // Afficher l'alerte de succès avec SweetAlert2
       await Swal.fire({
         icon: 'success',
         title: 'Succès!',
         text: 'Vous êtes authentifé, connectez-vous !',
       });
-
-      // Rediriger l'utilisateur vers la page de login
       navigate('/dashboard');
     } else {
-      // Si l'API renvoie une erreur (par exemple un champ invalide)
       throw new Error(response.data.error || "Une erreur inconnue est survenue.");
     }
 
-  } catch (error) {
-    // Gestion des erreurs et affichage d'un message d'erreur
+    } catch (error) {
+        // Gestion des erreurs et affichage d'un message d'erreur
     setError(error.message || "Une erreur est survenue lors de l'enregistrement.");
     Swal.fire({
       icon: 'error',
@@ -65,10 +59,11 @@ const Login = () => {
       text: error.message || "Une erreur inconnue est survenue.",
     });
     console.error("Erreur lors de la connexion:", error);
-  } finally {
-    // Désactivation de l'état de chargement
-    setLoading(false);
-  }
+  } 
+  // finally {
+    //   // Désactivation de l'état de chargement
+    //   setLoading(false);
+    // }
   };
 
   return (
@@ -126,4 +121,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Login

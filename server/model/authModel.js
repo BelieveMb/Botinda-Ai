@@ -12,10 +12,10 @@ const generateToken = (userId) => {
 // 📲 Inscription
 export const register = async (req, res) => {
   const { full_name, phone, password } = req.body;
- const email = "KINRw";
+
   // 1. Validation
-  if (!full_name || (!email && !phone) || !password) {
-    return res.status(400).json({ error: "Nom, mot de passe et (email ou téléphone) requis." });
+  if (!full_name || !phone || !password) {
+    return res.status(400).json({ error: "Nom, mot de passe et téléphone sont requis." });
   }
   if (password.length < 6) {
     return res.status(400).json({ error: "Le mot de passe doit avoir au moins 6 caractères." });
@@ -26,7 +26,7 @@ export const register = async (req, res) => {
     let {  existing, error } = await supabase
       .from('users')
       .select('iduser')
-      .or(`email.eq.${email},phone.eq.${phone}`)
+      .or(`phone.eq.${phone}`)
       .maybeSingle();
 
     if (existing) {
@@ -41,7 +41,7 @@ export const register = async (req, res) => {
     const {  user, error: insertError } = await supabase
       .from('users')
       .insert([{ full_name, phone, password: hashedPassword }])
-      .select('iduser, full_name, email, phone')
+      .select('iduser, full_name, phone')
       .single();
 
     if (insertError) throw insertError;
@@ -58,12 +58,15 @@ export const register = async (req, res) => {
     // 6. Générer JWT
     const token = generateToken(user.id);
 
-    return res.status(201).json({
-      success: true,
-      token,
-      user: { iduser: user.iduser, full_name: user.full_name, email: user.email, phone: user.phone },
-      message: "Vous êtes enregistré, connectez-vous !"
-    });
+    // return res.status(201).json({
+    //   success: true,
+    //   token,
+    //   user: { iduser: user.iduser, full_name: user.full_name, phone: user.phone },
+    //   message: "Vous êtes enregistré, connectez-vous !"
+    // });
+      res
+        .status(200)
+        .json({ message: "Utilisateur enregistré avec succès", iduser });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Erreur serveur. Réessayez plus tard." });

@@ -22,7 +22,7 @@ export default function LayoutDash({ children }) {
         </header>
 
         {/* Main */}
-        <main className="p-6">
+        <main className="p-6 ">
           {children}
         </main>
       </div>

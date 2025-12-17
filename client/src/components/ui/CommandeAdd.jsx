@@ -12,7 +12,7 @@ export default function CommandeAdd({ commandes, onAddClick }) {
   const navigate = useNavigate();
  
   return (
-    <div className="mt-6 bg-gray-100 opacity-95 rounded-lg p-4 border-2 border-gray-200 shadow-xl/30">
+    <div className="mt-6 bg-gray-100 opacity-95 rounded-lg p-4 border-2 border-gray-200 shadow-xl/30 lg:mx-20">
       <div className=" flex justify-start items-center mb-4 gap-3">
         <div className="w-10 h-10 bg-blue-300 rounded-full flex items-center justify-center" onClick={() => navigate("/dashboard")}>
             <span className="text-white text-lg">⬅️</span>

@@ -5,6 +5,8 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
 import authRoutes from "./routes/authRoutes.js"
+import orderRoutes from "./routes/orderRoutes.js"
+
 dotenv.config();
 
 const app = express();
@@ -16,6 +18,7 @@ app.use(morgan('dev'));
 app.use(express.json());
 
 app.use("/authUser", authRoutes);
+app.use("/order", orderRoutes);
 
 
 // Route de test
