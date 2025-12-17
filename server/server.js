@@ -4,7 +4,6 @@ import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
-import supabase from "./config/connexionDB.js"
 import authRoutes from "./routes/authRoutes.js"
 dotenv.config();
 

@@ -68,8 +68,8 @@ const Register = () => {
     }
 
     // Envoi de la requête POST pour enregistrer l'utilisateur
-    const response = await axios.post(`http://172.20.10.14:5000/authUser/register`, {
-      full_name, phone, password,
+    const response = await axios.post(`${config.apiUrl}/authUser/register`, {
+      full_name, phone, password
     });
 
     // Vérification de la réponse de l'API (en fonction de la structure de réponse de l'API)
@@ -101,7 +101,7 @@ const Register = () => {
     // Désactivation de l'état de chargement
     setLoading(false);
   }
-};
+  };
   return (
     <div className="min-h-screen bg-gray-200 flex flex-col items-center justify-center p-4">
       {/* Header */}
