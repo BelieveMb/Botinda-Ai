@@ -2,12 +2,6 @@ import { MainButton } from "../components/smallComponents/mainButton";
 
 export default function Homepage() {
 
-
-
-
-
-
-
   return (
     <section className="w-full layoutMain ">
       <aside className="w-full lg:w-xl flex flex-col justify-center items-center">

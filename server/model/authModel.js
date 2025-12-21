@@ -181,3 +181,13 @@ const { phone, password } = req.body;
   }
 }
 
+export const getInfoUser = async (req, res) => {
+  const { iduser } = req.params;
+  const { data, error } = await supabase
+    .from("users")
+    .select()
+    .eq("iduser", iduser)
+    .single();
+  if (error) throw error;
+  return data;
+};
