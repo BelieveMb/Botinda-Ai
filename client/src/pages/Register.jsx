@@ -13,7 +13,9 @@ const Register = () => {
   const [full_name, setFullname] = useState('');
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
-  const [message, setMessage] = useState('');                                                                                                
+  const [message, setMessage] = useState('');          
+  const [error, setError] = useState('');        
+  const [loading, setLoading] = useState('');                                                                                              
   const navigate = useNavigate();
 
   const fullNameChange = (e) => {

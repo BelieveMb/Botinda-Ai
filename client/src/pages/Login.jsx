@@ -9,8 +9,8 @@ import config from '../../config';
 
 
 const Login = () => {
-  const [phone, setPhone] = useState('');
-  const [password, setPassword] = useState('');
+  const [phone, setPhone] = useState('+2430817723066');
+  const [password, setPassword] = useState('123456789');
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -26,7 +26,17 @@ const Login = () => {
   e.preventDefault();
   setError('');
   setLoading(true);
-  
+
+  const storeToken = async (token, iduser) => {
+    try {
+      await AsyncStorage.setItem("userToken", token);
+      await AsyncStorage.setItem("iduser", iduser);
+      console.log("iduser ", iduser);
+      
+    } catch (error) {
+      console.error("Erreur lors du stockage du token:", error);
+    }
+  };
   try {
     // Validation des champs requis
     if (!phone || !password) {
@@ -35,17 +45,22 @@ const Login = () => {
     
     // Envoi de la requête POST pour enregistrer l'utilisateur
     const response = await axios.post(`${config.apiUrl}/authUser/login`, {phone: phone, password: password});
+    console.log('our data ', response.data);
     
     // Vérification de la réponse de l'API (en fonction de la structure de réponse de l'API)
     if (response.data.status === 200) {
     // if (response.data && response.data.success) {
-      // Afficher l'alerte de succès avec SweetAlert2
       await Swal.fire({
         icon: 'success',
         title: 'Succès!',
         text: 'Vous êtes authentifé, connectez-vous !',
       });
+      const { token, iduser } = response.data.data;
+      console.log("Token reçu :", token, "id user ", iduser); 
+      const userId = iduser; // ID de l'utilisateur
+      storeToken(token, userId.toString()); 
       navigate('/dashboard');
+
     } else {
       throw new Error(response.data.error || "Une erreur inconnue est survenue.");
     }

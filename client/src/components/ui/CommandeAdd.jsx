@@ -73,7 +73,7 @@ export default function CommandeAdd({ commandes, onAddClick }) {
           text: 'Vous êtes enregistré, connectez-vous !',
         });
 
-        // navigate('/login');
+        navigate('/dashboard');
       } else {
         // Si l'API renvoie une erreur (par exemple un champ invalide)
         throw new Error(response.data.error || "Une erreur inconnue est survenue.");
