@@ -1,13 +1,37 @@
 // src/pages/DashboardPage.jsx
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import StatsCard from "../components/dashboard/StatsCard";
 import FloatingActionButton from "../components/ui/FloatingActionButton";
 import CommandeList from "../components/ui/CommandeList";
 import { useNavigate } from "react-router-dom";
 import Header from "../layout/Header";
+import axios from "axios";
+import config from "../../config";
 
 export default function DashboardPage() {
   const navigate = useNavigate();   
+  const [infoUser, setInfoUser] = useState();
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const userId = 1;
+  useEffect(() => {
+    const fetchInfoUser = async () => {
+      try {
+        const response = await axios.get(`${config.apiUrl}/authUser/userInfo/${userId}`);
+        if (error) throw error;
+        setInfoUser(response.data);
+      } catch (err) {
+        setError(err.message);
+        console.log("message d'erreur : ", err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    fetchInfoUser();
+  }, [userId]);
+
   const [commandes, setCommandes] = useState([
     {
       id: 1,
@@ -54,7 +78,7 @@ export default function DashboardPage() {
       <main className="px-4 pt-6  bg-cover bg-center h-full" 
         style={{ backgroundImage: "url('../../public/BoTinda_agent1.png')" }} >
       
-        <h3 className="text-blue-700 text-xl mb-4">Hey, David ! 👋</h3>
+        <h3 className="secondary-color text-xl mb-4 font-semibold">Hey, {infoUser.full_name} ! 👋</h3>
         {/* Stats */}
         <div className="grid grid-cols-2 gap-4 mb-6 bg-gray-200 p-3 rounded-lg">
           <StatsCard title="Commandes" value="1,368" change={37.8} icon="commandes" tabActive={'commande'} />

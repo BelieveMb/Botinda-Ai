@@ -101,3 +101,15 @@ export const createOrder = async (req, res) => {
     res.status(500).json({ error: "Erreur interne. Réessayez plus tard." });
   }
 }
+
+
+// 🧾 Créer une nouvelle commande
+export const getMyOrders = async (req, res) => {
+  const { iduser } = req.params;
+  const { data, error } = await supabase
+    .from("order")
+    .select()
+    .eq("iduser", iduser);
+  if (error) throw error;
+  return data;
+}
