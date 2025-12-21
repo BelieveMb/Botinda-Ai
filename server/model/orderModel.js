@@ -28,9 +28,9 @@ export const createOrder = async (req, res) => {
     //   return res.status(400).json({ error: "Veuillez saisir au moins un produit." });
     // }
 
-    if (typeof total_amount !== 'number' || total_amount <= 0) {
-      return res.status(400).json({ error: "Le montant total doit être un nombre positif." });
-    }
+    // if (typeof total_amount !== 'number' || total_amount <= 0) {
+    //   return res.status(400).json({ error: "Le montant total doit être un nombre positif." });
+    // }
 
     // ✅ 2. Parsing des produits order_items, pause pour l'instant
     const parsedItems = parseOrderItems(products_raw.trim());
@@ -87,8 +87,7 @@ export const createOrder = async (req, res) => {
     //✅ 5. Réponse succès check order items save
     res.status(201).json({
       success: true,
-      message: "Commande enregistrée avec succès with all.",
-      order
+      message: "Commande enregistrée avec succès with all.", order
     })
     //  res
     //   .status(201)
