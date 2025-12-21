@@ -1,10 +1,14 @@
 // src/components/dashboard/CommandeList.jsx
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import InputBox from "./InputBox";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import config from "../../../config";
 import axios from "axios";
+import { InputTextarea } from "primereact/inputtextarea";
+import { Toast } from 'primereact/toast';
+import { Button } from 'primereact/button';
+
 
 export default function CommandeAdd({ commandes, onAddClick }) {
   const [name, setName] = useState('');
@@ -32,6 +36,14 @@ export default function CommandeAdd({ commandes, onAddClick }) {
   const addressChange = (e) => {
     setAddress(e.target.value); 
   };
+   const toast = useRef(null);
+
+  const clearToast = () => {
+      toast.current.clear();
+  };
+  const showToast = () => {
+      toast.current.show({ severity: 'info', summary: 'Info', detail: 'Séparer vos produits par le point virugle (;)', sticky: true });
+  };
   
   const handleSubmit = async (e) => {
     const parseMontant = parseInt(montant);
@@ -46,11 +58,11 @@ export default function CommandeAdd({ commandes, onAddClick }) {
         throw new Error("Remplissez tous les champs.");
       }
 
-      if (typeof montant !== 'number' || montant <= 0) {
+      if (typeof parseMontant !== 'number' || parseMontant <= 0) {
         throw new Error("Le montant total doit être un nombre positif.");
       }
       // Envoi de la requête POST pour enregistrer l'utilisateur
-      const response = await axios.post(`${config.apiUrl}/order/new/`, { customer_name: name, products_raw: product, customer_phone: phone, total_amount: parseMontant, customer_address: address });
+      const response = await axios.post(`${config.apiUrl}/order/new/`, { customer_name: name, products: product, customer_phone: phone, total_amount: parseMontant, customer_address: address });
       console.log("response = ", response);
       
       if(response.status === 200 || response.status === 201){ 
@@ -92,11 +104,20 @@ export default function CommandeAdd({ commandes, onAddClick }) {
               {error && <div className="text-red-500 text-sm p-2 bg-red-50 rounded">{error}</div>}          
 
         <InputBox placeholder={"Nom du client"} icon={"👤"} name={name} value={name} onChange={nameChange} />
-        <InputBox placeholder={"Phone"} name={phone} icon={"📞"} value={phone} onChange={phoneChange}  />
+        <InputBox placeholder={"Phone"} name={phone} type={"tel"} icon={"📞"} value={phone} onChange={phoneChange}  />
         {/* <InputBox icon={"📝"} /> */}
 
-        <textarea   placeholder={"Produits"} name={product} value={product} onChange={productChange}    className="w-full pl-10 pr-4 py-2 bg-gray-100 border-2 border-gray-200 text-blue-400 font-bold rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" ></textarea>
-        <InputBox placeholder={"Montant"} icon={"💰"} name={montant} value={montant} onChange={montantChange}  />
+        <div className="card flex justify-content-center">
+            <Toast ref={toast} position={"top-center"} />
+            {/* <Button onClick={show} label="Show" /> */}
+        </div>
+        <div className="card flex justify-content-center">
+            <InputTextarea onClick={showToast} autoResize value={product} onChange={(e) => setProduct(e.target.value)} rows={2} cols={30} className="w-full pl-10 pr-4 py-2 bg-gray-100 border-2 border-gray-200 text-blue-400 font-bold rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        </div>
+        
+        {/* <textarea   placeholder={"Produits"} name={product} value={product} onChange={productChange}    className="w-full pl-10 pr-4 py-2 bg-gray-100 border-2 border-gray-200 text-blue-400 font-bold rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" ></textarea> */}
+        <span className="font-bold text-blue-900">Séparer vos produits par le point virugle (;)</span>
+        <InputBox onClick={clearToast} placeholder={"Montant"} type={"number"} icon={"💰"} name={montant} value={montant} onChange={montantChange}  />
         <textarea   placeholder={"Adresse"} name={address} value={address} onChange={addressChange}    className="w-full pl-10 pr-4 py-2 bg-gray-100 border-2 border-gray-200 text-blue-400 font-bold rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" ></textarea>
 
         <div className="flex justify-between content-center gap-8">

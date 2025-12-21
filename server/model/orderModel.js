@@ -10,7 +10,7 @@ import { parseOrderItems } from '../utils/parser.js';
 
 // 🧾 Créer une nouvelle commande
 export const createOrder = async (req, res) => {
-  const { customer_name, customer_phone, products_raw, total_amount, customer_address } = req.body;
+  const { customer_name, customer_phone, products, total_amount, customer_address } = req.body;
   const userId = "152"; //req.user.id; //le token or JWT middleware a attaché l'utilisateur
 
   try {
@@ -33,7 +33,9 @@ export const createOrder = async (req, res) => {
     // }
 
     // ✅ 2. Parsing des produits order_items, pause pour l'instant
-    const parsedItems = parseOrderItems(products_raw.trim());
+    const parsedItems = products.trim();
+    console.log("our products= ", parsedItems);
+    
     
     if (parsedItems.length === 0) {
       return res.status(400).json({ error: "Impossible d'extraire les produits. Vérifiez le format." });
@@ -47,6 +49,7 @@ export const createOrder = async (req, res) => {
         customer_phone: customer_phone.trim(),
         customer_address: customer_address?.trim() || null,
         total_amount: parseFloat(total_amount.toFixed(2)),
+        products : products,
         currency: 'FC',
         status: 'received' // Statut initial
         }]).select(' customer_name, customer_phone, total_amount, created_at')
