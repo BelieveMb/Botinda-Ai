@@ -6,6 +6,7 @@ export default function CommandeItem({ commande }) {
   const navigate = useNavigate();
   const getStatusColor = (status) => {
     switch (status) {
+      case 'received': return 'bg-red-500 text-gray-100';
       case 'confirmée': return 'bg-yellow-100 text-yellow-800';
       case 'payée': return 'bg-green-100 text-green-800';
       case 'expédiée': return 'bg-blue-100 text-blue-800';
@@ -19,15 +20,15 @@ export default function CommandeItem({ commande }) {
       <div className="flex justify-between items-start">
         <div className="flex-1">
           <div className="flex items-center space-x-2 mb-1">
-            <span className="font-semibold primary-color">#1234 - {commande.client}</span>
+            <span className="font-semibold primary-color truncate w-36 lg:w-60">#{commande.idorder} - {commande.customer_name}</span>
             <span className={`px-2 py-1 text-xs font-bold rounded-full ${getStatusColor(commande.status)}`}>
               {commande.status}
             </span>
           </div>
-          <p className="text-sm text-gray-800">{commande.produit}</p>
-          <p className="text-sm font-bold action-color">{commande.montant} FC</p>
+          <p className="text-sm text-gray-800">{commande.products}</p>
+          <p className="text-sm font-bold action-color">{commande.total_amount} FC</p>
         </div>
-        <button className="bg-blue-500 text-white p-2 rounded-full" onClick={() => navigate("/order/1")}>
+        <button className="bg-blue-500 text-white p-2 rounded-full" onClick={() => navigate(`order/${commande.idorder}`)}>
           <span className=" text-2xl font-bold"> → </span> 
         </button>
       </div>

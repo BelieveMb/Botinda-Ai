@@ -2,12 +2,6 @@
 import supabase from '../config/connexionDB.js';
 import { parseOrderItems } from '../utils/parser.js';
 
-
-
-
-
-
-
 // 🧾 Créer une nouvelle commande
 export const createOrder = async (req, res) => {
   const { customer_name, customer_phone, products, total_amount, customer_address } = req.body;
@@ -107,9 +101,10 @@ export const createOrder = async (req, res) => {
 export const getMyOrders = async (req, res) => {
   const { iduser } = req.params;
   const { data, error } = await supabase
-    .from("order")
+    .from("orders")
     .select()
-    .eq("iduser", iduser);
+    .eq("user_id", iduser);
+
   if (error) throw error;
   return data;
 }
