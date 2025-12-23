@@ -25,7 +25,7 @@ export default function CommandeItem({ commande }) {
               {commande.status}
             </span>
           </div>
-          <p className="text-sm text-gray-800">{commande.products}</p>
+          <p className="text-sm text-gray-800 w-64 truncate">{commande.products}</p>
           <p className="text-sm font-bold action-color">{commande.total_amount} FC</p>
         </div>
         <button className="bg-blue-500 text-white p-2 rounded-full" onClick={() => navigate(`order/${commande.idorder}`)}>
