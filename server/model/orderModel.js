@@ -108,3 +108,14 @@ export const getMyOrders = async (req, res) => {
   if (error) throw error;
   return data;
 }
+
+export const getInfoOrder = async (req, res) => {
+  const { idorder } = req.params;
+  const { data, error } = await supabase
+    .from("orders")
+    .select()
+    .eq("idorder", idorder)
+    .single();
+  if (error) throw error;
+  return data;
+};

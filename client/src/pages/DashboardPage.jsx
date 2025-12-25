@@ -14,13 +14,18 @@ export default function DashboardPage() {
   const [commandes, setCommandes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [userId, setUserId] = useState();
 
-  const userId = 1;
+  const getId =  localStorage.getItem("iduser");
+  const iduser = parseInt(getId);
+  console.log("id ", iduser);
+  
+  // setUserId(iduser;
   useEffect(() => {
     const fetchInfoUser = async () => {
       try {
-        const response = await axios.get(`${config.apiUrl}/authUser/userInfo/${userId}`);
-        const orderData = await axios.get(`${config.apiUrl}/order/myOrders/${userId}`);
+        const response = await axios.get(`${config.apiUrl}/authUser/userInfo/${iduser}`);
+        const orderData = await axios.get(`${config.apiUrl}/order/myOrders/${iduser}`);
 
         if (error) throw error;
         setInfoUser(response.data);
@@ -36,16 +41,6 @@ export default function DashboardPage() {
     fetchInfoUser();
   }, [userId]);
   console.log("orderlist ", commandes);
-  
-  // const [commandes, setCommandes] = useState([
-  //   {
-  //     id: 1,
-  //     client: "Mbuiy Tatiana",
-  //     produit: "Robe Ankara x1, Sac x1",
-  //     montant: "85 000",
-  //     status: "confirmée"
-  //   }
-  // ]);
 
   const handleAddCommande = () => {
     alert("Ouvre le formulaire d'ajout !");

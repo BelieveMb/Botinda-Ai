@@ -29,9 +29,10 @@ const Login = () => {
 
   const storeToken = async (token, iduser) => {
     try {
-      await AsyncStorage.setItem("userToken", token);
-      await AsyncStorage.setItem("iduser", iduser);
-      console.log("iduser ", iduser);
+
+      localStorage.setItem("userToken", token);
+      localStorage.setItem("iduser", iduser);
+      console.log("iduser in login ", iduser);
       
     } catch (error) {
       console.error("Erreur lors du stockage du token:", error);
