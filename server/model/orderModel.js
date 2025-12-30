@@ -119,3 +119,21 @@ export const getInfoOrder = async (req, res) => {
   if (error) throw error;
   return data;
 };
+
+export const updateStatut = async (req, res) => {
+  const { idorder, status } = req.body;
+
+  try {
+    const { data, error } = await supabase.from("orders")
+      .update({ status: status })
+      .eq("idorder", idorder);
+
+    if (error) throw error;
+      res.status(201).json({ message: "Le statut de cette commande est mise à jour avec succès !", data })    
+
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+    console.log(error);
+    
+  }
+};

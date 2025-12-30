@@ -31,6 +31,7 @@ export default function OrderDetailCard({ order, onStatusChange, onSendMessage, 
   };
 
   const handleStatusChange = (newStatus) => {
+    
     setSelectedStatus(newStatus);
     onStatusChange?.(newStatus);
     setIsEditingStatus(false);
