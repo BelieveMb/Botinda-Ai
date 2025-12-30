@@ -1,21 +1,28 @@
 // src/components/dashboard/OrderDetailCard.jsx
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Dropdown } from 'primereact/dropdown';
+import axios from "axios";
+import config from "../../../config";
+import Swal from "sweetalert2";
 
 export default function OrderDetailCard({ order, onStatusChange, onSendMessage, onRelanceIA }) {
   const navigate = useNavigate();
+  const { idorder } = useParams();
+  const [message, setMessage] = useState('');          
+  const [error, setError] = useState('');        
+  const [loading, setLoading] = useState('');    
   const [isEditingStatus, setIsEditingStatus] = useState(false);
   const [selectedStatus, setSelectedStatus] = useState();
-  // const [selectedCity, setSelectedCity] = useState(null);
+
   const allStatuts = [
-    { name: 'Reçue', label: 'Reçue', color: 'bg-gray-100 text-gray-800' },
-    { name: 'Confirmée', label: 'Confirmée', color: 'bg-yellow-100 text-yellow-800' },
-    { name: 'Payée', label: 'Payée', color: 'bg-green-100 text-green-800' },
-    { name: 'Expédiée', label: 'Expédiée', color: 'bg-blue-100 text-blue-800' },
-    { name: 'Livrée', label: 'Livrée', color: 'bg-gray-200 text-gray-700' }
+    { value: 'received', label: 'Reçue', color: 'bg-gray-100 text-gray-800' },
+    { value: 'confirmed', label: 'Confirmée', color: 'bg-yellow-100 text-yellow-800' },
+    { value: 'paid', label: 'Payée', color: 'bg-green-100 text-green-800' },
+    { value: 'shipped', label: 'Expédiée', color: 'bg-blue-100 text-blue-800' },
+    { value: 'delivered', label: 'Livrée', color: 'bg-gray-200 text-gray-700' }
   ];
-  console.log("new statut ", selectedStatus.name);
+  console.log("new statut ", selectedStatus);
   
   // Liste des statuts possibles (à adapter selon ta DB)
   const statuses = [
@@ -31,7 +38,6 @@ export default function OrderDetailCard({ order, onStatusChange, onSendMessage, 
   };
 
   const handleStatusChange = (newStatus) => {
-    
     setSelectedStatus(newStatus);
     onStatusChange?.(newStatus);
     setIsEditingStatus(false);
@@ -42,6 +48,41 @@ export default function OrderDetailCard({ order, onStatusChange, onSendMessage, 
     // Format international : +243...
     return phone.replace(/^(\+\d{2})/, '$1 ');
   };
+  const handleUpdateStatut = async (e) => {
+    e.preventDefault();
+    setError('');
+    setLoading(true);
+
+    try {
+      const response = await axios.post(`${config.apiUrl}/order/detail`, {idorder: idorder, status: selectedStatus});
+      console.log(response);
+      
+      if(response.status === 200 || response.status === 201){ 
+        // Afficher l'alerte de succès avec SweetAlert2
+        await Swal.fire({
+          icon: 'success',
+          title: 'Succès!',
+          text: 'Le statut de cette commande est mise à jour !',
+        });
+      } else {
+        // Si l'API renvoie une erreur (par exemple un champ invalide)
+        throw new Error(response.data.error || "Une erreur inconnue est survenue.");
+      }
+
+    } catch (error) {
+      // Gestion des erreurs et affichage d'un message d'erreur
+      setError(error.message || "Une erreur est survenue lors de l'enregistrement.");
+      Swal.fire({
+        icon: 'error',
+        title: 'Erreur',
+        text: error.message || "Une erreur inconnue est survenue.",
+      });
+      console.error("Erreur lors de l'inscription:", error);
+    } finally {
+      // Désactivation de l'état de chargement
+      setLoading(false);
+    }
+  }
 
   return (
     <div className="bg-white opacity-95 rounded-xl shadow-lg p-5 border border-gray-200">
@@ -61,7 +102,7 @@ export default function OrderDetailCard({ order, onStatusChange, onSendMessage, 
       
       <div className="card flex flex-col justify-content-center">
         <label className="block text-sm font-medium text-gray-700 mb-1">Statut</label>
-        <Dropdown value={selectedStatus} onChange={(e) => setSelectedStatus(e.value)} options={allStatuts} optionLabel="name" 
+        <Dropdown value={selectedStatus} onChange={(e) => setSelectedStatus(e.value)} options={allStatuts} optionLabel="label" 
                 editable placeholder="Le statut de la commande" className={`w-full md:w-14rem text-gray-700 border-2 p-2 border-[#007BFF] ${status.color}`}  />
       </div>
       {!order ? null : <>
@@ -138,7 +179,7 @@ export default function OrderDetailCard({ order, onStatusChange, onSendMessage, 
           <span>Envoyer un message</span>
         </button>
         <button
-          onClick={onRelanceIA}
+          onClick={handleUpdateStatut}
           className="flex-1 bg-yellow-500 hover:bg-yellow-600 text-[#002D6B] font-medium py-3 px-4 rounded-lg flex items-center justify-center space-x-2"
         >
           <span>🤖</span>
