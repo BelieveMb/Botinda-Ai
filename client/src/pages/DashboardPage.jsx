@@ -20,7 +20,7 @@ export default function DashboardPage() {
   const iduser = parseInt(getId);
   console.log("id ", iduser);
   
-  // setUserId(iduser;
+
   useEffect(() => {
     const fetchInfoUser = async () => {
       try {
@@ -65,6 +65,7 @@ export default function DashboardPage() {
         </div>
 
         {/* Liste des commandes */}
+        {loading ? <p>Chargement...</p> : null }
         <CommandeList
           commandes={commandes}
           onAddClick={handleAddCommande}

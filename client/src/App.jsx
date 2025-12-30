@@ -22,7 +22,7 @@ function App() {
               <Route path="/signup" element={<Register />} />
               <Route path="/dashboard" element={<DashboardPage />} /> 
               <Route path="/order/new" element={<NewOrder />} /> 
-              <Route path="/order/1" element={<OrderDetail />} /> 
+              <Route path="/order/detail/:idorder" element={<OrderDetail />} /> 
               <Route path="/report" element={<Report />} /> 
               <Route path="/search" element={<SearchScreen />} /> 
             </Routes>

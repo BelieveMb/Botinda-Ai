@@ -14,6 +14,13 @@ export default function CommandeItem({ commande }) {
       default: return 'bg-gray-100 text-gray-800';
     }
   };
+  console.log("order detail", commande.idorder);
+  
+  
+  const handleShowCommande = ({}) => {
+    // alert("Ouvre le detail de la commande !");
+    navigate(`/order/detail/${commande.idorder}`);
+  };
 
   return (
     <div className="bg-gray-100 opacity-95 rounded-lg p-4 mb-3 shadow-sm border border-gray-200 hover:bg-gray-300">
@@ -28,7 +35,7 @@ export default function CommandeItem({ commande }) {
           <p className="text-sm text-gray-800 w-64 truncate">{commande.products}</p>
           <p className="text-sm font-bold action-color">{commande.total_amount} FC</p>
         </div>
-        <button className="bg-blue-500 text-white p-2 rounded-full" onClick={() => navigate(`order/${commande.idorder}`)}>
+        <button className="bg-blue-500 text-white p-2 rounded-full" onClick={handleShowCommande} >
           <span className=" text-2xl font-bold"> → </span> 
         </button>
       </div>

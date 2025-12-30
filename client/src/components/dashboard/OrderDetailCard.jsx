@@ -1,12 +1,22 @@
 // src/components/dashboard/OrderDetailCard.jsx
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Dropdown } from 'primereact/dropdown';
 
 export default function OrderDetailCard({ order, onStatusChange, onSendMessage, onRelanceIA }) {
   const navigate = useNavigate();
   const [isEditingStatus, setIsEditingStatus] = useState(false);
-  const [selectedStatus, setSelectedStatus] = useState(order.status);
-
+  const [selectedStatus, setSelectedStatus] = useState();
+  // const [selectedCity, setSelectedCity] = useState(null);
+  const allStatuts = [
+    { name: 'Reçue', label: 'Reçue', color: 'bg-gray-100 text-gray-800' },
+    { name: 'Confirmée', label: 'Confirmée', color: 'bg-yellow-100 text-yellow-800' },
+    { name: 'Payée', label: 'Payée', color: 'bg-green-100 text-green-800' },
+    { name: 'Expédiée', label: 'Expédiée', color: 'bg-blue-100 text-blue-800' },
+    { name: 'Livrée', label: 'Livrée', color: 'bg-gray-200 text-gray-700' }
+  ];
+  console.log("new statut ", selectedStatus.name);
+  
   // Liste des statuts possibles (à adapter selon ta DB)
   const statuses = [
     { value: 'received', label: 'Reçue', color: 'bg-gray-100 text-gray-800' },
@@ -47,20 +57,28 @@ export default function OrderDetailCard({ order, onStatusChange, onSendMessage, 
         </button>
       </div>
 
-      {/* Commande info */}
+      
+      <div className="card flex flex-col justify-content-center">
+        <label className="block text-sm font-medium text-gray-700 mb-1">Statut</label>
+        <Dropdown value={selectedStatus} onChange={(e) => setSelectedStatus(e.value)} options={allStatuts} optionLabel="name" 
+                editable placeholder="Le statut de la commande" className={`w-full md:w-14rem text-gray-700 border-2 p-2 border-[#007BFF] ${status.color}`}  />
+      </div>
+      {!order ? null : <>
       <div className="mb-4">
-        <div className="flex items-center space-x-2 mb-2">
-          <span className="text-lg font-bold text-blue-900">#{order.id} - {order.customer_name}</span>
+        {/* <div className="flex items-center space-x-2 mb-2">
+          <span className="text-lg font-bold text-blue-900">#{order.idorder} - {order.customer_name}</span>
         </div>
         <div className="flex items-center space-x-2 text-gray-600">
           <span>📞</span>
           <a href={`tel:${order.customer_phone}`} className="hover:text-blue-600">
             {formatPhone(order.customer_phone)}
           </a>
-        </div>
+        </div> 
+        update statut
+        */}
       </div>
-
-      {/* Status */}
+    
+    
       <div className="mb-4">
         <label className="block text-sm font-medium text-gray-700 mb-1">Statut</label>
         {isEditingStatus ? (
@@ -87,29 +105,29 @@ export default function OrderDetailCard({ order, onStatusChange, onSendMessage, 
         )}
       </div>
 
-      {/* Products */}
+
       <div className="mb-4">
         <label className="block text-sm font-medium text-gray-700 mb-1">Produits</label>
-        <div className="bg-gray-50 rounded-md p-3">
-          {order.products_raw.split('\n').map((line, index) => (
+        <div className="bg-gray-50 rounded-md p-3 text-gray-600">
+          {/* {order.products_raw.split('\n').map((line, index) => (
             <p key={index} className="text-gray-800">{line.trim()}</p>
-          ))}
+          ))} */}
+          {order.products}
         </div>
       </div>
 
-      {/* Montant */}
+
       <div className="mb-4">
         <label className="block text-sm font-medium text-gray-700 mb-1">Montant</label>
         <p className="text-xl font-bold text-gray-900">{order.total_amount} FC</p>
       </div>
 
-      {/* Date */}
       <div className="mb-6">
         <label className="block text-sm font-medium text-gray-700 mb-1">Date</label>
         <p className="text-gray-800">{new Date(order.created_at).toLocaleString('fr-FR')}</p>
-      </div>
+      </div> </>}
 
-      {/* Buttons */}
+      {/* Buttons show the data here*/}
       <div className="flex space-x-3">
         <button
           onClick={onSendMessage}

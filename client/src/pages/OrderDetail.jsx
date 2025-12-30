@@ -1,27 +1,28 @@
 // src/pages/DashboardPage.jsx
-import React, { useState } from "react";
+import React, { useState, useEffect} from "react";
 import StatsCard from "../components/dashboard/StatsCard";
 import FloatingActionButton from "../components/ui/FloatingActionButton";
 import Header from "../layout/Header";
 import CommandeList from "../components/ui/CommandeList";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import CommandeItem from "../components/ui/CommandeItem";
 import SearchBar from "../components/ui/SearchBar";
 import FilterDropdown from "../components/ui/FilterDropdown";
 import OrderDetailCard from "../components/dashboard/OrderDetailCard";
+import axios from "axios";
+import config from "../../config";
+
 
 export default function OrderDetail() {
   const navigate = useNavigate();   
-   const order = {
-    id: "1234",
-    customer_name: "Mbuyi Tatiana",
-    customer_phone: "+243817723066",
-    products_raw: "Robe Ankara x1\nSac x1",
-    total_amount: "10 000",
-    status: "confirmed",
-    created_at: "2025-04-05T14:32:00Z"
-  };
+  const { idorder } = useParams();
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [commandes, setCommandes] = useState();
+ 
 
+  console.log("data ID ", idorder);
+  
   const handleStatusChange = (newStatus) => {
     console.log("Nouveau statut :", newStatus);
     // Ici, tu mets à jour la base de données
@@ -40,6 +41,23 @@ export default function OrderDetail() {
     navigate("/order/new");
     // Ici, tu rediriges vers /order/new ou ouvres un modal
   };
+  
+  useEffect(() => {
+    const fetchOrder = async () => {
+      try {
+        const orderData = await axios.get(`${config.apiUrl}/order/detail/${idorder}`);
+        if (error) throw error;
+        setCommandes(orderData.data);
+      } catch (err) {
+        setError(err.message);
+        console.log("message d'erreur : ", err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    fetchOrder();
+  }, [idorder]);
 
   return (
     <div className="min-h-screen bg-gray-50 pb-20">
@@ -59,7 +77,7 @@ export default function OrderDetail() {
           <div className="mt-6">
 
               <OrderDetailCard
-                order={order}
+                order={commandes}
                 onStatusChange={handleStatusChange}
                 onSendMessage={handleSendMessage}
                 onRelanceIA={handleRelanceIA}
