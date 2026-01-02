@@ -5,6 +5,7 @@ import { Dropdown } from 'primereact/dropdown';
 import axios from "axios";
 import config from "../../../config";
 import Swal from "sweetalert2";
+import { Button } from 'primereact/button';
 
 export default function OrderDetailCard({ order, onStatusChange, onSendMessage, onRelanceIA }) {
   const navigate = useNavigate();
@@ -22,7 +23,7 @@ export default function OrderDetailCard({ order, onStatusChange, onSendMessage, 
     { value: 'shipped', label: 'Expédiée', color: 'bg-blue-100 text-blue-800' },
     { value: 'delivered', label: 'Livrée', color: 'bg-gray-200 text-gray-700' }
   ];
-  console.log("new statut ", selectedStatus);
+  console.log("new statut ", isEditingStatus);
   
   // Liste des statuts possibles (à adapter selon ta DB)
   const statuses = [
@@ -36,11 +37,11 @@ export default function OrderDetailCard({ order, onStatusChange, onSendMessage, 
   const getStatusConfig = (status) => {
     return statuses.find(s => s.value === status) || statuses[0];
   };
-
-  const handleStatusChange = (newStatus) => {
-    setSelectedStatus(newStatus);
-    onStatusChange?.(newStatus);
-    setIsEditingStatus(false);
+// improve btnn saveee save statut
+  const handleStatusChange = () => {
+    // setSelectedStatus(newStatus);
+    // onStatusChange?.(newStatus);
+    setIsEditingStatus(true);
   };
 
   const formatPhone = (phone) => {
@@ -100,11 +101,7 @@ export default function OrderDetailCard({ order, onStatusChange, onSendMessage, 
       </div>
 
       
-      <div className="card flex flex-col justify-content-center">
-        <label className="block text-sm font-medium text-gray-700 mb-1">Statut</label>
-        <Dropdown value={selectedStatus} onChange={(e) => setSelectedStatus(e.value)} options={allStatuts} optionLabel="label" 
-                editable placeholder="Le statut de la commande" className={`w-full md:w-14rem text-gray-700 border-2 p-2 border-[#007BFF] ${status.color}`}  />
-      </div>
+     
       {!order ? null : <>
       <div className="mb-4">
         {/* <div className="flex items-center space-x-2 mb-2">
@@ -119,9 +116,13 @@ export default function OrderDetailCard({ order, onStatusChange, onSendMessage, 
         update statut
         */}
       </div>
+      <div className="card flex flex-col justify-content-center">
+        <label className="block text-sm font-medium text-gray-700 mb-1">Statut</label>
+        <Dropdown value={selectedStatus || order.status} onChange={(e) => setSelectedStatus(e.value)} options={allStatuts} optionLabel="label" 
+                editable placeholder="Le statut de la commande" className={`w-full md:w-14rem text-gray-700 border-2 p-2 border-[#007BFF] ${status.color}`}  onClick={() => handleStatusChange(selectedStatus)} />
+      </div>
     
-    
-      <div className="mb-4">
+      {/* <div className="mb-4">
         <label className="block text-sm font-medium text-gray-700 mb-1">Statut</label>
         {isEditingStatus ? (
           <div className="flex space-x-2">
@@ -145,7 +146,9 @@ export default function OrderDetailCard({ order, onStatusChange, onSendMessage, 
             <span>▼</span>
           </div>
         )}
-      </div>
+      </div> */}
+      {isEditingStatus ? <Button icon="pi pi-check" label="Enregistrer" className="my-3 bg-blue-400 p-3" rounded aria-label="Filter" onClick={handleUpdateStatut} severity="secondary" /> : null }
+
 
 
       <div className="mb-4">
@@ -179,7 +182,7 @@ export default function OrderDetailCard({ order, onStatusChange, onSendMessage, 
           <span>Envoyer un message</span>
         </button>
         <button
-          onClick={handleUpdateStatut}
+          onClick={onRelanceIA}
           className="flex-1 bg-yellow-500 hover:bg-yellow-600 text-[#002D6B] font-medium py-3 px-4 rounded-lg flex items-center justify-center space-x-2"
         >
           <span>🤖</span>

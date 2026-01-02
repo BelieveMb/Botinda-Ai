@@ -12,3 +12,7 @@ Currently, two official plugins are available:
 ## format enregistrement et connexion en rajoutant +243 (to delete)
 ## securisation de route
 # dans login,add stock token
+# dans order detail, travailler sur le btn envoyer msg et relance IA
+ - la relance IA enverra des messages par rapport a son statut
+
+# Add loading before to show data

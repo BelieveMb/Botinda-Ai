@@ -127,7 +127,7 @@ export const updateStatut = async (req, res) => {
     const { data, error } = await supabase.from("orders")
       .update({ status: status })
       .eq("idorder", idorder);
-
+      
     if (error) throw error;
       res.status(201).json({ message: "Le statut de cette commande est mise à jour avec succès !", data })    
 
