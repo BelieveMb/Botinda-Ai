@@ -7,15 +7,15 @@ export default function CommandeItem({ commande }) {
   const getStatusColor = (status) => {
     switch (status) {
       case 'received': return 'bg-red-500 text-gray-100';
-      case 'confirmée': return 'bg-yellow-100 text-yellow-800';
-      case 'payée': return 'bg-green-100 text-green-800';
-      case 'expédiée': return 'bg-blue-100 text-blue-800';
-      case 'livrée': return 'bg-gray-100 text-gray-800';
+      case 'confirmed': return 'bg-yellow-100 text-yellow-800';
+      case 'paid': return 'bg-green-100 text-green-800';
+      case 'shipped': return 'bg-blue-100 text-blue-800';
+      case 'delivered': return 'bg-gray-100 text-gray-800';
       default: return 'bg-gray-100 text-gray-800';
     }
   };
   console.log("order detail", commande.idorder);
-  
+  // Make report ogic
   
   const handleShowCommande = ({}) => {
     // alert("Ouvre le detail de la commande !");
