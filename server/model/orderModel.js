@@ -139,7 +139,7 @@ export const updateStatut = async (req, res) => {
 };
 
 
-// 🧾 Créer une nouvelle commande
+/*🧾 Créer une nouvelle commande
 export const getOrdersbyDay = async (req, res) => {
   const { iduser, created_at } = req.params;
   const { data, error } = await supabase
@@ -151,4 +151,34 @@ export const getOrdersbyDay = async (req, res) => {
 
   if (error) throw error;
   return data;
-}
+}*/
+
+
+export const getOrdersbyDay = async (req, res) => {
+  try {
+    const { iduser, created_at } = req.params;
+
+    // Début de la journée
+    const startDate = new Date(created_at);
+    startDate.setUTCHours(0, 0, 0, 0);
+
+    // Début du jour suivant
+    const endDate = new Date(startDate);
+    endDate.setUTCDate(endDate.getUTCDate() + 1);
+
+    const { data, error } = await supabase
+      .from("orders")
+      .select("*")
+      .eq("user_id", iduser)
+      .gte("created_at", startDate.toISOString())
+      .lt("created_at", endDate.toISOString());
+
+    if (error) {
+      return res.status(400).json({ error: error.message });
+    }
+
+    return res.status(200).json(data);
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
+};

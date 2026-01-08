@@ -1,10 +1,21 @@
 // src/pages/SalesReportPage.jsx
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import Layout from "../layout/Layout";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import config from "../../config";
 
 export default function Report() {
   const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
+  const navigate = useNavigate();   
+  const [commandes, setCommandes] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [userId, setUserId] = useState();
+  const getId =  localStorage.getItem("iduser");
+  const iduser = parseInt(getId);
+
+  
 
   // Simulons des données réelles
   const orders = [
@@ -40,7 +51,7 @@ export default function Report() {
   const year = date.getFullYear();
 
   const formatted = `${day}-${month}-${year}`;
-  console.log("La date = ", formatted);
+  console.log("La dat selecte = ", selectedDate);
   
   // Filtrer les commandes par date sélectionnée
   const filteredOrders = useMemo(() => {
@@ -52,12 +63,12 @@ export default function Report() {
 
   // Calculer les stats
   const stats = useMemo(() => {
-    const totalOrders = filteredOrders.length;
-    const totalAmount = filteredOrders.reduce((sum, o) => sum + o.amount, 0);
-    const paidOrders = filteredOrders.filter(o => o.status === 'paid').length;
-    const pendingAmount = filteredOrders
-      .filter(o => o.status !== 'paid')
-      .reduce((sum, o) => sum + o.amount, 0);
+    const totalOrders = commandes.length;
+    const totalAmount = commandes.reduce((sum, o) => sum + o.total_amount, 0);
+    const paidOrders = commandes.filter(o => o.status === 'paid').length;
+    const pendingAmount = commandes
+      .filter(o => o.status !== 'paid').length;
+      // .reduce((sum, o) => sum + o.amount, 0);
 
     return { totalOrders, totalAmount, paidOrders, pendingAmount };
   }, [filteredOrders]);
@@ -67,6 +78,26 @@ export default function Report() {
     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     return new Date(dateString).toLocaleDateString('fr-FR', options);
   };
+
+  useEffect(() => {
+    const fetchInfoOrder = async () => {
+      try {
+        const response = await axios.get(`${config.apiUrl}/order/report/${iduser}/2025-12-21`);
+        
+        if (error) throw error;
+        setCommandes(response.data);
+      } catch (err) {
+        setError(err.message);
+        console.log("message d'erreur : ", err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    fetchInfoOrder();
+  }, [userId]);
+  console.log("data mt ", commandes );
+
 
   // Couleurs par statut
   const getStatusColor = (status) => {
@@ -106,7 +137,7 @@ export default function Report() {
         <div className="grid grid-cols-2 gap-4 mb-6">
           <div className="bg-white rounded-lg p-4 shadow-sm text-center">
             <p className="text-sm text-gray-500">Total Commandes</p>
-            <p className="text-2xl font-bold secondary-color">{stats.totalOrders}</p>
+            <p className="text-2xl font-bold secondary-color">{commandes.length}</p>
           </div>
           <div className="bg-white rounded-lg p-4 shadow-sm text-center">
             <p className="text-sm text-gray-500">Montant Total</p>
@@ -118,7 +149,7 @@ export default function Report() {
           </div>
           <div className="bg-white rounded-lg p-4 shadow-sm text-center">
             <p className="text-sm text-gray-500">En attente</p>
-            <p className="text-xl font-semibold text-orange-600">{stats.pendingAmount.toLocaleString()} FC</p>
+            <p className="text-xl font-semibold text-orange-600">{stats.pendingAmount.toLocaleString()}</p>
           </div>
         </div>
 
@@ -128,7 +159,7 @@ export default function Report() {
         {/* Liste des commandes */}
         <div className="bg-white rounded-xl shadow-sm overflow-hidden">
           <div className="px-4 py-3 bg-gray-50 border-b">
-            <h3 className="font-medium text-gray-800">Commandes du jour ({filteredOrders.length})</h3>
+            <h3 className="font-medium text-gray-800">Commandes du jour ({commandes.length})</h3>
           </div>
 
           <div className="divide-y divide-gray-200">
