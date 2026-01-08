@@ -33,7 +33,15 @@ export default function Report() {
       created_at: "2025-04-05T09:45:00Z"
     }
   ];
+  const date = new Date();
 
+  const day = String(date.getDate()).padStart(2, "0");
+  const month = String(date.getMonth() + 1).padStart(2, "0"); // mois commencent à 0
+  const year = date.getFullYear();
+
+  const formatted = `${day}-${month}-${year}`;
+  console.log("La date = ", formatted);
+  
   // Filtrer les commandes par date sélectionnée
   const filteredOrders = useMemo(() => {
     return orders.filter(order => {
@@ -114,6 +122,9 @@ export default function Report() {
           </div>
         </div>
 
+        <div className="mt-6 text-center">
+          <button className="bg-[#FFA500] hover:bg-[#FF8C00] text-[#002D6B] font-medium px-6 py-2 rounded-lg shadow">📄 Generer le rapport</button>
+        </div>
         {/* Liste des commandes */}
         <div className="bg-white rounded-xl shadow-sm overflow-hidden">
           <div className="px-4 py-3 bg-gray-50 border-b">

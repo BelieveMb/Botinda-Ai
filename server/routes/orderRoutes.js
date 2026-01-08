@@ -15,5 +15,6 @@ router.post('/new', createOrderController);
 router.get('/myOrders/:iduser', getMyOrdersController);
 router.get('/detail/:idorder', getInfoOrderController);
 router.post('/detail/', updateStatutController);
+router.get('/report/:iduser/:created_at', getMyOrdersController);
 
 export default router;

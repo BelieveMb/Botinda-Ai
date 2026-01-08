@@ -137,3 +137,18 @@ export const updateStatut = async (req, res) => {
     
   }
 };
+
+
+// 🧾 Créer une nouvelle commande
+export const getOrdersbyDay = async (req, res) => {
+  const { iduser, created_at } = req.params;
+  const { data, error } = await supabase
+    .from("orders")
+    .select()
+    .eq("user_id", iduser)
+    .eq("created_at", created_at);
+
+
+  if (error) throw error;
+  return data;
+}
