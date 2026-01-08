@@ -1,5 +1,5 @@
 const supabase = require("../config/connexionDB");
-import { getDayRange, parseDate } from '../utils/dateUtils.js';
+import { getDayRange, parseDate } from '../utils/dateUtils';
 
 export const getDailyReport = async (req, res) => {
     const { date } = req.query; // ex: ?date=2025-04-05
