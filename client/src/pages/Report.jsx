@@ -51,15 +51,14 @@ export default function Report() {
   const year = date.getFullYear();
 
   const formatted = `${day}-${month}-${year}`;
-  console.log("La dat selecte = ", selectedDate);
   
   // Filtrer les commandes par date sélectionnée
   const filteredOrders = useMemo(() => {
-    return orders.filter(order => {
+    return commandes.filter(order => {
       const orderDate = new Date(order.created_at).toISOString().split('T')[0];
       return orderDate === selectedDate;
     });
-  }, [orders, selectedDate]);
+  }, [commandes, selectedDate]);
 
   // Calculer les stats
   const stats = useMemo(() => {
@@ -78,11 +77,14 @@ export default function Report() {
     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     return new Date(dateString).toLocaleDateString('fr-FR', options);
   };
+  
+  console.log("da cmd =", commandes);
+  
 
   useEffect(() => {
     const fetchInfoOrder = async () => {
       try {
-        const response = await axios.get(`${config.apiUrl}/order/report/${iduser}/2025-12-21`);
+        const response = await axios.get(`${config.apiUrl}/order/report/${iduser}/${selectedDate}`);
         
         if (error) throw error;
         setCommandes(response.data);
@@ -95,8 +97,7 @@ export default function Report() {
     };
     
     fetchInfoOrder();
-  }, [userId]);
-  console.log("data mt ", commandes );
+  }, [selectedDate]);
 
 
   // Couleurs par statut
@@ -153,22 +154,21 @@ export default function Report() {
           </div>
         </div>
 
-        <div className="mt-6 text-center">
-          <button className="bg-[#FFA500] hover:bg-[#FF8C00] text-[#002D6B] font-medium px-6 py-2 rounded-lg shadow">📄 Generer le rapport</button>
-        </div>
+       
         {/* Liste des commandes */}
         <div className="bg-white rounded-xl shadow-sm overflow-hidden">
           <div className="px-4 py-3 bg-gray-50 border-b">
             <h3 className="font-medium text-gray-800">Commandes du jour ({commandes.length})</h3>
           </div>
+          {/* generer le pdf */}
 
           <div className="divide-y divide-gray-200">
             {filteredOrders.length > 0 ? (
               filteredOrders.map((order) => (
-                <div key={order.id} className="p-4 hover:bg-gray-25 transition">
+                <div key={order.idorder} className="p-4 hover:bg-gray-25 transition">
                   <div className="flex justify-between items-start mb-2">
                     <div>
-                      <p className="font-semibold text-gray-800">#{order.id} - {order.customer_name}</p>
+                      <p className="font-semibold text-gray-800">#{order.idorder} - {order.customer_name}</p>
                       <p className="text-sm text-gray-600">{order.products}</p>
                     </div>
                     <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(order.status)}`}>
@@ -177,9 +177,9 @@ export default function Report() {
                     </span>
                   </div>
                   <div className="flex justify-between items-center mt-2">
-                    <p className="text-lg font-bold text-gray-900">{order.amount.toLocaleString()} FC</p>
+                    {/* <p className="text-lg font-bold text-gray-900">{order.amount.toLocaleString()} FC</p> */}
                     <button className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-sm font-medium">
-                      <Link to={"/order/1"}>Détails →</Link>
+                      <Link to={`/order/detail/${order.idorder}`}> Détails →</Link>
                     </button>
                   </div>
                 </div>
