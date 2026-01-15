@@ -9,6 +9,7 @@ import NewOrder from './pages/NewOrder';
 import OrderDetail from './pages/OrderDetail';
 import Report from './pages/Report';
 import SearchScreen from './pages/SearchScreen';
+import Profile from './pages/Profile';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
               <Route path="/order/detail/:idorder" element={<OrderDetail />} /> 
               <Route path="/report" element={<Report />} /> 
               <Route path="/search" element={<SearchScreen />} /> 
+              <Route path="/profile" element={<Profile />} /> 
             </Routes>
         </div>
       </div>

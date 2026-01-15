@@ -70,7 +70,7 @@ export default function CommandeAdd({ commandes, onAddClick }) {
         await Swal.fire({
           icon: 'success',
           title: 'Succès!',
-          text: 'Vous êtes enregistré, connectez-vous !',
+          text: 'Cette commande est enregistrée !',
         });
 
         navigate('/dashboard');

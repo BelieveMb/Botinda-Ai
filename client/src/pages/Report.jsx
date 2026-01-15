@@ -78,7 +78,7 @@ export default function Report() {
     return new Date(dateString).toLocaleDateString('fr-FR', options);
   };
   
-  console.log("da cmd =", commandes);
+  console.log("da cmd =", iduser);
   
 
   useEffect(() => {
@@ -133,6 +133,7 @@ export default function Report() {
         <h2 className="text-xl font-bold text-gray-800 mb-4">
           Ventes du {formatDate(`${selectedDate}T00:00:00Z`)}
         </h2>
+        <p>check error {error} </p>
 
         {/* Stats Cards */}
         <div className="grid grid-cols-2 gap-4 mb-6">
@@ -193,12 +194,13 @@ export default function Report() {
         </div>
 
         {/* Bouton d’export (optionnel futur) */}
-        <div className="mt-6 text-center">
-          <button className="bg-[#FFA500] hover:bg-[#FF8C00] text-[#002D6B] font-medium px-6 py-2 rounded-lg shadow">
-            📄 Exporter en PDF
-          </button>
-        </div>
-
+        {commandes.length === 0 ? null :  
+          <div className="mt-6 text-center">
+            <button className="bg-[#FFA500] hover:bg-[#FF8C00] text-[#002D6B] font-medium px-6 py-2 rounded-lg shadow">
+              📄 Exporter en PDF
+            </button>
+          </div>
+        }
       </main>
 
     </Layout>
