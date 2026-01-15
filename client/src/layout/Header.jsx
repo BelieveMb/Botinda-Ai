@@ -18,9 +18,9 @@ export default function Header({ onMenuClick }) {
                   ? 'border-gray-50 border-0 border-b-4 font-bold' : 'text-blue-600'}`} onClick={() => navigate("/dashboard")}>🛒</button>
         <button className={`text-2xl rounded-xl px-4 py-1  transition-colors ${isActive("/report")
                   ? 'border-gray-50 border-0 border-b-4 font-bold' : 'text-blue-600'}`}  onClick={() => navigate("/report")}>📋</button>
-        <button className={`text-2xl px-4 py-1  rounded-xl transition-colors ${isActive("/search")
+        <button className={`text-2xl px-4 py-1 rounded-xl transition-colors ${isActive("/search")
                   ? 'border-gray-50 border-0 border-b-4 font-bold' : 'text-blue-600'}`}  onClick={() => navigate("/search")}>🔍 </button>
-      <button className={`text-2xl  rounded-xl transition-colors ${isActive("/profile")
+      <button className={`text-2xl px-4 py-1  rounded-xl transition-colors ${isActive("/profile")
                   ? 'border-gray-50 border-0 border-b-4 font-bold' : 'text-blue-600'}`}  onClick={() => navigate("/profile")}>          👤
         </button>
       </div>
