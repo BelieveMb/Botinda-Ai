@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import Header from "../layout/Header";
 import axios from "axios";
 import config from "../../config";
+import { ProgressSpinner } from 'primereact/progressspinner';
 
 export default function DashboardPage() {
   const navigate = useNavigate();   
@@ -65,7 +66,14 @@ export default function DashboardPage() {
         </div>
 
         {/* Liste des commandes */}
-        {loading ? <p>Chargement...</p> : null }
+        {
+          loading ? <div> <p className="text-center py-8 text-gray-500">Chargement des commandes...</p>
+            <div className="card w-full flex justify-center items-center">
+              <ProgressSpinner style={{width: '50px', height: '70px'}} strokeWidth="8" fill="var(--surface-ground)" animationDuration=".5s" />
+          </div>
+          </div> : null
+        
+        }
         <CommandeList
           commandes={commandes}
           onAddClick={handleAddCommande}

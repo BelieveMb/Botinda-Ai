@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import Layout from '../layout/Layout';
 import axios from 'axios';
 import config from '../../config';
+import { ProgressSpinner } from 'primereact/progressspinner';
 
 export const logout = () => {
   localStorage.removeItem('token');
@@ -60,6 +61,9 @@ export default function Profile() {
       {infoUser === null ? 
       <>
       <h4>Chargement des informations...</h4>
+      <div className="card w-full flex justify-center items-center">
+        <ProgressSpinner style={{width: '50px', height: '70px'}} strokeWidth="8" fill="var(--surface-ground)" animationDuration=".5s" />
+      </div>
       </>
       : <><h4>Chargement des informations...</h4>
 

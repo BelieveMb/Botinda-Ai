@@ -2,8 +2,10 @@
 import React, { useState, useMemo, useEffect } from "react";
 import Layout from "../layout/Layout";
 import { Link, useNavigate } from "react-router-dom";
+import { ProgressSpinner } from 'primereact/progressspinner';
 import axios from "axios";
 import config from "../../config";
+
 
 export default function Report() {
   const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
@@ -78,7 +80,6 @@ export default function Report() {
     return new Date(dateString).toLocaleDateString('fr-FR', options);
   };
   
-  console.log("da cmd =", iduser);
   
 
   useEffect(() => {
@@ -98,7 +99,6 @@ export default function Report() {
     
     fetchInfoOrder();
   }, [selectedDate]);
-
 
   // Couleurs par statut
   const getStatusColor = (status) => {
@@ -133,7 +133,15 @@ export default function Report() {
         <h2 className="text-xl font-bold text-gray-800 mb-4">
           Ventes du {formatDate(`${selectedDate}T00:00:00Z`)}
         </h2>
-        <p>check error {error} </p>
+
+        {
+          loading ? <div> <p className="text-center py-8 text-gray-500">Chargement des commandes...</p>
+            <div className="card w-full flex justify-center items-center">
+              <ProgressSpinner style={{width: '50px', height: '70px'}} strokeWidth="8" fill="var(--surface-ground)" animationDuration=".5s" />
+          </div>
+          </div> : null
+        
+        }
 
         {/* Stats Cards */}
         <div className="grid grid-cols-2 gap-4 mb-6">
