@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import Header from './Header'
+import { useNavigate } from 'react-router-dom';
 
 function Layout({children}) {
   const [user, setUser] = useState(null);
   const getId =  localStorage.getItem("iduser");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const currentUser = parseInt(getId);
